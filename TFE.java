@@ -81,6 +81,7 @@ public class TFE {
 			if (manual) {
 				m = input.getUserInputMove(legalMoves);
 			} else {
+			    // perform a fixed number of depth charges to improve score estimation
 				for (int i = 0; i < MAX_CHARGES; i++) {
 					TFETree node = gameTree.select();
 					node.expand();
