@@ -1,0 +1,7 @@
+TFE: Uses MonteCarloTreeSearch (MCTS) estimation to attempt to
+play the random game 2048. This game features a 4x4 board, where
+the player can combine adjacent matching numbers (all powers of
+2) to attempt to create a tile totaling 2048 points.
+
+compile using javac *.java
+run using java TFE
