@@ -17,6 +17,8 @@ public class TFE {
 	public static final int BOARD_SIZE = 4;
 	public static final int MAX_CHARGES = 5000;
 	
+	public static final int TRIALS = 50;
+	
 	private JFrame invisFrame;
 	private MoveListener input;
 	public static Random r;
@@ -63,7 +65,7 @@ public class TFE {
 	/* Play an iteration of the game.
 	 * if manual, accepts user input; otherwise attempts to
 	 * find the best possible move using MCTS */
-	public void play(boolean manual) {
+	public int play(boolean manual) {
 		TFETree.DCResult gameResults = new TFETree.DCResult();
 		int[][] board = TFESM.createEmptyBoard();
 		board = TFESM.generateNewPieces(board, 2);
@@ -75,7 +77,7 @@ public class TFE {
 			if (legalMoves.isEmpty()) {
 				System.out.println("No legal moves found! you didn't win this time ;)");
 				System.out.println("Final score: " + gameResults.score + " After " + gameResults.moves + " moves");
-				break;
+				return gameResults.score;
 			}
 			Move m = null;
 			if (manual) {
@@ -100,8 +102,12 @@ public class TFE {
 	}
 
 	public static void main(String[] argv) {
-		TFE game = new TFE();
-		game.play(false);
+		double total = 0;
+		for (int i = 0; i < TRIALS; i++) {
+			TFE game = new TFE();
+			total += game.play(false);
+		}
+		System.out.println("Average score using MCS: " + (total/TRIALS));
 	}
 	
 	/* Listens for user input */

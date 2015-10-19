@@ -12,6 +12,8 @@ public class TFETree {
 	// parameter that balances exploration and exploitation
 	public static final double C = 15.0;
 	
+	public static final boolean MCS = true;
+	
 	private TFETree[] children;
 	private int visits;
 	private boolean isRand;
@@ -43,7 +45,7 @@ public class TFETree {
 			if (children[i].visits == 0)
 				return children[i];
 		}
-		if (!isRand) {
+		if (!isRand && !MCS) {
 			double score = -1;
 			TFETree result = null;
 			for (int i = 0; i < children.length; i++) {
@@ -55,7 +57,11 @@ public class TFETree {
 			}
 			return result.select();
 		} else {
-			return children[TFE.r.nextInt(children.length)].select();
+			if (MCS) {
+				return children[TFE.r.nextInt(children.length)];
+			} else {
+				return children[TFE.r.nextInt(children.length)].select();
+			}
 		}
 	}
 	
